@@ -371,3 +371,180 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
+/* =============================================================================
+   MOBILE RESPONSIVE STYLES
+   Breakpoints: 576px (phones), 768px (tablets). Adjusts layout, spacing, and
+   touch targets so the landing page and app work well on small screens.
+   ============================================================================= */
+
+/* ---- Small phones and narrow viewports (up to 576px) ---- */
+@media (max-width: 576px) {
+  /* Landing: reduce vertical padding so content fits without excessive scroll */
+  .landing {
+    padding: 2rem 1rem 3rem;
+  }
+
+  .landing-section {
+    margin-bottom: 2.5rem;
+  }
+
+  /* Hero: slightly smaller title on very small screens (clamp handles most) */
+  .landing-hero-title {
+    font-size: 1.75rem;
+  }
+
+  .landing-hero-tagline {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .landing-cta {
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    /* Larger tap target for touch devices */
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Process steps: stack vertically on very small screens so they don’t wrap awkwardly */
+  .landing-process {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .landing-process-arrow {
+    transform: rotate(90deg);
+  }
+
+  /* Cards: ensure consistent spacing when stacked */
+  .landing-cards {
+    padding-bottom: 2rem;
+  }
+
+  .landing-card .card-body {
+    padding: 1.25rem;
+  }
+
+  /* Header: tighter padding on mobile */
+  .landing-header {
+    padding: 0.75rem 1rem;
+  }
+
+  .landing-header-brand {
+    font-size: 1rem;
+  }
+
+  .landing-header-status {
+    font-size: 0.8rem;
+  }
+
+  /* App toolbar: stack into a single column so room label, link, copy, and user count don’t overflow */
+  #app .row.mb-3 {
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 0.75rem;
+  }
+
+  #app .row.mb-3 .col-auto {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  #app .row.mb-3 .col-auto.ms-auto {
+    order: -1;
+    text-align: center;
+  }
+
+  /* Shareable link input: full width on mobile for easier copy/paste */
+  .shareable-link-input {
+    width: 100% !important;
+    max-width: 100%;
+    font-size: 0.75rem;
+  }
+
+  /* Copy button: full width on small screens for easier tap */
+  #copy-link-button-app {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  /* Run and Clear buttons: comfortable tap targets on touch devices */
+  #run-button,
+  #clear-output-button {
+    min-height: 38px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Editor/output cards: give a minimum height so both panels are usable when stacked */
+  .editor-section.card,
+  .output-section.card {
+    min-height: 220px;
+  }
+
+  #editor {
+    min-height: 200px;
+  }
+
+  .editor-section .card-header,
+  .output-section .card-header {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .editor-section .card-header .d-flex.gap-2 {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  /* Feedback FAB: smaller and slightly inset so it doesn’t cover content on narrow screens */
+  .feedback-fab {
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* ---- Phones and small tablets (up to 768px) ---- */
+@media (max-width: 768px) {
+  .landing {
+    padding: 2.5rem 1rem 4rem;
+  }
+
+  .landing-section {
+    max-width: 100%;
+  }
+
+  /* App: reduce horizontal padding so editor/output use full width */
+  #app.container-fluid {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  /* Ensure stacked editor/output rows have enough height */
+  #app .row.g-3 {
+    min-height: 0;
+  }
+
+  .output-card-body {
+    min-height: 160px;
+  }
+}
+
+/* ---- Tablets and up: minor tweaks for medium screens ---- */
+@media (min-width: 577px) and (max-width: 768px) {
+  .landing-process {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .shareable-link-input {
+    min-width: 180px;
+  }
+}
+
