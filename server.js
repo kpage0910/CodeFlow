@@ -48,8 +48,16 @@ const rooms = {};
 
 // Map socket.id -> roomId so we can broadcast userCount on disconnect.
 const socketIdToRoom = {};
-// Per-room user count so we don't rely on adapter timing at disconnect.
-const roomUserCount = {};
+
+/**
+ * Get the current number of sockets in a room from the Socket.IO adapter.
+ * This is the source of truth and avoids double-counting when a client
+ * reconnects and sends joinRoom again (common in production).
+ */
+function getRoomSize(roomId) {
+  const room = io.sockets.adapter.rooms.get(roomId);
+  return room ? room.size : 0;
+}
 
 // Per-IP rate limit for run: { ip: { count, resetAt } }. Reset after 1 minute.
 const runRateByIp = {};
@@ -165,7 +173,6 @@ io.on('connection', (socket) => {
 
     socket.join(roomId);
     socketIdToRoom[socket.id] = roomId;
-    roomUserCount[roomId] = (roomUserCount[roomId] || 0) + 1;
 
     console.log(`Socket ${socket.id} joined room ${roomId}`);
 
@@ -174,7 +181,8 @@ io.on('connection', (socket) => {
       lastRunResult: room.lastRunResult
     });
 
-    io.to(roomId).emit('userCount', { count: roomUserCount[roomId] });
+    // Use adapter room size so reconnects / duplicate joinRoom don't inflate count.
+    io.to(roomId).emit('userCount', { count: getRoomSize(roomId) });
   });
 
   // When a client has new code text, it sends the full content.
@@ -317,17 +325,15 @@ io.on('connection', (socket) => {
   socket.on('userCountRequest', (payload) => {
     const roomId = payload && payload.roomId ? String(payload.roomId) : null;
     if (!roomId) return;
-    const count = roomUserCount[roomId] ?? 0;
-    socket.emit('userCount', { count });
+    socket.emit('userCount', { count: getRoomSize(roomId) });
   });
 
   socket.on('disconnect', () => {
     const roomId = socketIdToRoom[socket.id];
     delete socketIdToRoom[socket.id];
     if (roomId) {
-      roomUserCount[roomId] = Math.max(0, (roomUserCount[roomId] || 1) - 1);
-      const count = roomUserCount[roomId];
-      socket.to(roomId).emit('userCount', { count });
+      // Socket is already removed from room by Socket.IO; adapter size is correct.
+      socket.to(roomId).emit('userCount', { count: getRoomSize(roomId) });
     }
     console.log('Client disconnected:', socket.id);
   });

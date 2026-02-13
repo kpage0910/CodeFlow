@@ -26,6 +26,11 @@ const connectionStatus = document.getElementById('connection-status');
 let currentRoomId = null;
 let runStatus = 'idle'; // 'idle' | 'running' | 'done' | 'error'
 
+// Track if we've already had a connection (so we only re-join on reconnect, not on first connect).
+// This prevents double-join when opening a room link: load fires enterRoom → joinRoom, then connect
+// fires and would emit joinRoom again, making the server count the same user twice.
+let hasConnectedBefore = false;
+
 // Prefer pathname /r/:id; fallback to query ?room=
 function getRoomFromUrl() {
   const path = window.location.pathname;
@@ -187,12 +192,15 @@ runButton.addEventListener('click', () => {
 
 // Basic connection status indicators. On reconnect, re-join the current room so
 // the server has us in the room again and user count (and room state) stay correct.
+// Only re-join when hasConnectedBefore is true so we don't double-join on first load
+// (enterRoom already emits joinRoom; if connect fires after that we'd count the same user twice).
 socket.on('connect', () => {
   connectionStatus.textContent = 'Connected';
   connectionStatus.style.color = '#22c55e';
-  if (currentRoomId) {
+  if (currentRoomId && hasConnectedBefore) {
     socket.emit('joinRoom', { roomId: currentRoomId });
   }
+  hasConnectedBefore = true;
 });
 
 socket.on('disconnect', () => {
