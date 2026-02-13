@@ -185,10 +185,14 @@ runButton.addEventListener('click', () => {
 
 // --- Socket.IO event handlers ---
 
-// Basic connection status indicators.
+// Basic connection status indicators. On reconnect, re-join the current room so
+// the server has us in the room again and user count (and room state) stay correct.
 socket.on('connect', () => {
   connectionStatus.textContent = 'Connected';
   connectionStatus.style.color = '#22c55e';
+  if (currentRoomId) {
+    socket.emit('joinRoom', { roomId: currentRoomId });
+  }
 });
 
 socket.on('disconnect', () => {
