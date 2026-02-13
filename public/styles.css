@@ -1,0 +1,369 @@
+/* styles.css – CodeFlow: minimal, professional landing + app layout */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ----- Landing page (reference-style) ----- */
+.landing-page {
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.landing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background-color: #f5f5f5;
+  border-bottom: none;
+}
+
+.landing-header-brand {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.landing-header-brand:hover {
+  color: #000;
+  text-decoration: none;
+}
+
+.landing-header-status {
+  font-size: 0.875rem;
+  color: #6c757d;
+  font-weight: 400;
+}
+
+.main {
+  min-height: calc(100vh - 52px);
+}
+
+/* Landing: each section centered and on its own line */
+.landing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 1.5rem 5rem;
+  width: 100%;
+}
+
+.landing-section {
+  width: 100%;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 4.5rem;
+}
+
+.landing-section:last-child {
+  margin-bottom: 0;
+}
+
+.landing-section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #212529;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Hero: big title, tagline, CTA */
+.landing-hero {
+  text-align: center;
+}
+
+.landing-hero-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.landing-hero-tagline {
+  font-size: 1.1rem;
+  color: #495057;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  max-width: 32ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.landing-cta {
+  display: inline-block;
+  margin-top: 0.25rem;
+  padding: 0.6rem 1.25rem;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.landing-cta:hover {
+  background-color: #212529;
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Instructions: process steps in a horizontal row, section centered */
+.landing-process-wrap {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.landing-process {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem 1rem;
+}
+
+.landing-process-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  color: #212529;
+}
+
+.landing-process-step-done {
+  border-color: rgba(25, 135, 84, 0.3);
+}
+
+.landing-process-icon {
+  font-size: 1rem;
+}
+
+.landing-process-arrow {
+  color: #adb5bd;
+  font-size: 0.9rem;
+}
+
+/* What you get: feature cards, section centered */
+.landing-cards {
+  max-width: 900px;
+  text-align: center;
+  padding-top: 1rem;
+  padding-bottom: 4rem;
+}
+
+.landing-cards-inner {
+  width: 100%;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.landing-card .card-body {
+  padding: 1.5rem;
+}
+
+.landing-card-icon {
+  display: inline-block;
+  font-size: 1.25rem;
+  color: #495057;
+  margin-bottom: 0.75rem;
+}
+
+.landing-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 0.35rem;
+}
+
+.landing-card-text {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin: 0;
+  line-height: 1.45;
+}
+
+.editor-section {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+#editor {
+  flex: 1;
+  width: 100%;
+  resize: none;
+}
+
+.output-section {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* App-only: shareable link, run status, user count */
+.shareable-link-input {
+  width: 220px;
+  font-size: 0.8rem;
+  background-color: #f8f9fa;
+}
+
+.run-status-label {
+  min-width: 3.5rem;
+}
+
+.output-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow: auto;
+}
+
+.output-block {
+  margin: 0;
+  overflow: auto;
+  white-space: pre-wrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+}
+
+.output-stderr {
+  color: #b91c1c;
+}
+
+.output-exit {
+  color: #6c757d;
+}
+
+#output {
+  height: 100%;
+  margin: 0;
+  overflow: auto;
+  white-space: pre-wrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+}
+
+/* Make the app editor/output cards fill the available height equally */
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#app .row.g-3 {
+  flex: 1;
+}
+
+.editor-section.card,
+.output-section.card {
+  height: 100%;
+}
+
+.editor-section .card-body,
+.output-section .card-body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-section textarea {
+  flex: 1;
+}
+
+/* ----- Feedback page (centered message + CTA) ----- */
+.feedback-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feedback-section {
+  text-align: center;
+  max-width: 400px;
+  padding: 2rem 1.5rem;
+}
+
+.feedback-message {
+  font-size: 1.1rem;
+  color: #495057;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.feedback-cta {
+  display: inline-block;
+  padding: 0.6rem 1.25rem;
+  background-color: #000;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.feedback-cta:hover {
+  background-color: #212529;
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.feedback-back {
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+}
+
+.feedback-back-link {
+  font-size: 0.9rem;
+  color: #6c757d;
+  text-decoration: none;
+}
+
+.feedback-back-link:hover {
+  color: #212529;
+}
+
+/* Fixed feedback button: bottom right, opens form in new tab */
+.feedback-fab {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  padding: 0.5rem 1rem;
+  background-color: #000;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s, box-shadow 0.2s;
+  z-index: 1000;
+}
+
+.feedback-fab:hover {
+  background-color: #212529;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+

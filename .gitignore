@@ -1,0 +1,18 @@
+# Dependencies (reinstall with npm install)
+node_modules/
+
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+
+# OS and editor cruft
+.DS_Store
+Thumbs.db
+*.log
+*.swp
+*.swo
+
+# Optional: uncomment if you add a build step later
+# dist/
+# build/

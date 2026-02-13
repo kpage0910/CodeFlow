@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CodeFlow</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="landing-page">
+    <header class="landing-header">
+      <a href="/" class="landing-header-brand">CodeFlow</a>
+      <span id="connection-status" class="landing-header-status">Disconnected</span>
+    </header>
+
+    <main class="main">
+      <!-- Landing: hero + process + feature cards -->
+      <section id="landing" class="landing">
+        <!-- Hero: own line, centered -->
+        <div class="landing-section landing-hero">
+          <h1 class="landing-hero-title">Collaborate. Code. Simple.</h1>
+          <p class="landing-hero-tagline">
+            One link. Shared editor. Live output. No setup.
+          </p>
+          <button type="button" id="start-collab-button" class="landing-cta">
+            Get Started →
+          </button>
+        </div>
+
+        <!-- Instructions: own line, centered -->
+        <div class="landing-section landing-process-wrap">
+          <div class="landing-process">
+            <div class="landing-process-step">
+              <span class="landing-process-icon"><i class="bi bi-plus-circle"></i></span>
+              <span>Create room</span>
+            </div>
+            <span class="landing-process-arrow" aria-hidden="true">→</span>
+            <div class="landing-process-step">
+              <span class="landing-process-icon"><i class="bi bi-link-45deg"></i></span>
+              <span>Share link</span>
+            </div>
+            <span class="landing-process-arrow" aria-hidden="true">→</span>
+            <div class="landing-process-step landing-process-step-done">
+              <span class="landing-process-icon"><i class="bi bi-check-circle-fill text-success"></i></span>
+              <span>Code together</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- What the app is: own line, centered -->
+        <div class="landing-section landing-cards">
+          <div class="landing-cards-inner">
+          <div class="row g-4">
+            <div class="col-12 col-md-4">
+              <div class="landing-card card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                  <span class="landing-card-icon"><i class="bi bi-lightning-charge"></i></span>
+                  <h3 class="landing-card-title">Real-time editing</h3>
+                  <p class="landing-card-text">Google-Docs-style sync. See changes as others type.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4">
+              <div class="landing-card card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                  <span class="landing-card-icon"><i class="bi bi-play-circle"></i></span>
+                  <h3 class="landing-card-title">Run code together</h3>
+                  <p class="landing-card-text">One click runs Python. Output shared with everyone.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4">
+              <div class="landing-card card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                  <span class="landing-card-icon"><i class="bi bi-link-45deg"></i></span>
+                  <h3 class="landing-card-title">One link to share</h3>
+                  <p class="landing-card-text">Send the room link. No sign-up, no install.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- App area: only visible once a room is active -->
+      <section id="app" class="app container-fluid py-4" style="display: none">
+        <div class="row mb-3 align-items-center">
+          <div class="col-auto">
+            <span id="room-label" class="fw-semibold"></span>
+          </div>
+          <div class="col-auto">
+            <input type="text" id="shareable-link" class="form-control form-control-sm shareable-link-input" readonly />
+          </div>
+          <div class="col-auto d-flex align-items-center gap-2">
+            <button id="copy-link-button-app" class="btn btn-outline-secondary btn-sm">
+              Copy room link
+            </button>
+            <span id="copy-feedback" class="copy-feedback small text-success" style="visibility: hidden;"></span>
+          </div>
+          <div class="col-auto ms-auto">
+            <span id="user-count" class="text-muted small">0 users in room</span>
+          </div>
+        </div>
+
+        <div class="row g-3 h-100">
+          <!-- Editor + Run button -->
+          <div class="col-12 col-lg-6">
+            <section class="editor-section card h-100">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <span>Shared Python editor</span>
+                <div class="d-flex align-items-center gap-2">
+                  <span id="run-status" class="run-status-label small text-muted">Idle</span>
+                  <button id="run-button" class="btn btn-success btn-sm">Run ▶</button>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <textarea
+                  id="editor"
+                  class="form-control border-0 rounded-0"
+                  spellcheck="false"
+                  rows="14"
+                  placeholder='Type Python here, e.g.:
+
+print("Hello from CodeFlow")'
+                ></textarea>
+              </div>
+            </section>
+          </div>
+
+          <!-- Shared output area: stdout, stderr, exit code, Clear button -->
+          <div class="col-12 col-lg-6">
+            <section class="output-section card h-100">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <span>Shared Output (latest run)</span>
+                <button id="clear-output-button" class="btn btn-outline-secondary btn-sm">Clear Output</button>
+              </div>
+              <div class="card-body output-card-body">
+                <pre id="output-stdout" class="output-block mb-0 small"></pre>
+                <pre id="output-stderr" class="output-block output-stderr mb-0 small"></pre>
+                <div id="output-exit" class="output-exit small"></div>
+                <div id="output-truncated" class="output-truncated small text-muted"></div>
+                <div id="output-input-tip" class="output-input-tip small text-muted mt-2" style="display: none;"></div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Update href below if you change the feedback form URL -->
+    <a href="https://forms.gle/61ZU2RKBF9qAC9nZ6" target="_blank" rel="noopener" class="feedback-fab" title="Send feedback">Feedback</a>
+
+    <!-- Socket.IO client library is served automatically by the backend at this path -->
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- Our minimal client-side logic -->
+    <script src="/client.js"></script>
+  </body>
+</html>
+
