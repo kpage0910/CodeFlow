@@ -1,4 +1,8 @@
-/* styles.css – CodeFlow: minimal, professional landing + app layout */
+/*
+  styles.css – CodeFlow layout and styling.
+  Core: Landing page (header, hero, create/join), in-app (editor, output panel, buttons), and feedback page.
+  Uses Bootstrap for grid/icons; custom rules for colors, spacing, and responsive behavior.
+*/
 
 *,
 *::before,

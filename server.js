@@ -1,9 +1,6 @@
-// server.js
-// Minimal CodeFlow backend:
-// - Serves a static frontend from ./public
-// - Uses Socket.IO for realtime collaborative editing
-// - Keeps all room state in memory (no database)
-// - Executes Python code on demand with a strict 3-second timeout
+// server.js – CodeFlow backend.
+// Core: Serves static frontend from ./public; Socket.IO for realtime rooms (join, code sync, run, user count);
+// in-memory room state (no DB); runs Python code on demand with 3s timeout and size/rate limits.
 
 const express = require('express');
 const http = require('http');

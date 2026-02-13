@@ -1,8 +1,6 @@
-// client.js
-// Minimal frontend logic for the CodeFlow MVP.
-// - Connect to Socket.IO, join room by ID, sync editor, run code, show output.
-// - Room from URL: /r/:roomId (preferred) or ?room=...
-// - Create Room redirects to /r/:roomId. Run state and presence handled via server events.
+// client.js – CodeFlow frontend logic.
+// Core: Connects to Socket.IO; reads room from URL (/r/:roomId or ?room=); joins room, syncs editor
+// and run output with server; handles Create Room (redirect to /r/:id), Run button, copy link, connection status.
 
 const socket = io();
 
