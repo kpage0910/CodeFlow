@@ -333,9 +333,9 @@ io.on('connection', (socket) => {
   });
 });
 
-// Start the HTTP server.
+// Start the HTTP server. Bind to 0.0.0.0 so Fly.io (and other hosts) can reach it.
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-  console.log(`CodeFlow server listening on http://localhost:${PORT}`);
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`CodeFlow server listening on http://0.0.0.0:${PORT}`);
 });
 
