@@ -1,43 +1,92 @@
 # CodeFlow
 
-A lightweight, real-time collaborative coding app. Share a room link, edit Python code together, and run it with shared output—no sign-up, no heavy IDE.
+A simple, real-time collaborative coding app.
+Create a room, share one link, write Python together, and run code with shared output.
 
-## What it does
+## Overview
 
-- **Shared rooms** – Create or join a room by URL (e.g. `/r/demo`). Everyone in the room sees the same code and edits in real time.
-- **Run code** – Run the current Python code with one click. Stdout, stderr, and exit code are shown to everyone in the room.
-- **Minimal setup** – No accounts or database. Open the app, share the link, start coding.
+CodeFlow helps people code together without setup friction.
+Instead of sharing screens or installing heavy tools, everyone joins the same room and sees the same editor live.
 
-## Why it was made
+## Why This Project
 
-CodeFlow was built to let people **collaborate on code** without installing anything or using a full IDE. It’s a **lightweight option**: in-memory state, no auth, and a simple stack (Node, Socket.IO, static frontend) so you can run it locally or deploy it easily for pair programming, teaching, or quick shared snippets.
+I built this to make collaboration fast and accessible for:
 
-## Tech overview
+- Pair programming
+- Teaching and tutoring
+- Quick debugging sessions
+- Sharing small code ideas
 
-- **Backend:** Node.js, Express, Socket.IO. Serves the frontend from `public/`, keeps room state in memory, runs Python via subprocess with time and size limits.
-- **Frontend:** Plain HTML/CSS/JS (Bootstrap for layout). Connects to Socket.IO, syncs editor content and run output by room.
+The goal was to keep things focused: no accounts, no database, no unnecessary complexity.
 
-## Important files
+## Core User Flow
 
-Each important file has a short comment at the top describing its role. Summary:
+1. Create or open a room URL (example: `/r/demo-room`)
+2. Share the room link
+3. Everyone edits the same Python code in real time
+4. Click **Run**
+5. Everyone sees the same output (stdout, stderr, exit code)
+
+## System Design (High Level)
+
+The architecture is intentionally lightweight:
+
+- **Frontend:** Plain HTML/CSS/JavaScript with Bootstrap for UI
+- **Backend:** Node.js + Express + Socket.IO
+- **Execution:** Python runs in a subprocess with timeout and size limits
+- **State:** In-memory room state (resets when the server restarts)
+
+## Tech Stack
+
+| Layer | Technology | Purpose |
+| --- | --- | --- |
+| Frontend | HTML, CSS, JavaScript, Bootstrap | User interface and room interactions |
+| Backend | Node.js, Express, Socket.IO | Realtime syncing and room management |
+| Runtime | Python 3 | Executes code submitted from the editor |
+
+## Key Features
+
+- Real-time shared editing
+- Shared room links
+- One-click Python execution
+- Shared output panel for all users in the room
+- Basic execution safeguards (limits and rate control)
+
+## Project Structure
 
 | File | Role |
-|------|------|
-| `server.js` | Backend: static serving, Socket.IO rooms, Python execution, rate limits. |
-| `public/index.html` | Main app shell: landing + in-app UI (editor, run button, output). |
-| `public/client.js` | Frontend logic: Socket.IO connection, room from URL, editor sync, run request, output display. |
-| `public/styles.css` | Layout and styling for landing and app (Bootstrap + custom). |
-| `public/feedback.html` | Standalone feedback page; links back to app. |
+| --- | --- |
+| `server.js` | Backend server, Socket.IO rooms, Python execution, safety limits |
+| `public/index.html` | App layout (landing page + editor/output interface) |
+| `public/client.js` | Client logic for room sync, run requests, and output updates |
+| `public/styles.css` | App styling and responsive layout |
 
-## Run locally
+## Run Locally
+
+### Requirements
+
+- Node.js + npm
+- Python 3
+
+### Steps
 
 ```bash
 npm install
-node server.js
+npm start
 ```
 
-Open `http://localhost:3000`. Python 3 must be installed for the Run feature.
+Open `http://localhost:3000`.
 
-## Deploy
+## Current Scope
 
-The app can be deployed to Fly.io (or similar) using a Dockerfile that includes both Node and Python. See the deployment notes in the repo or use the Dockerfile and `server.listen(PORT, '0.0.0.0', ...)` for cloud hosting.
+This is an MVP focused on one clear workflow: collaborate on Python code in real time.
+It is designed to be easy to run, easy to understand, and easy to iterate on.
+
+## Future Improvements
+
+Possible next steps:
+
+- Persistent rooms (database-backed)
+- Multi-language support
+- Optional authentication
+- Better run history and collaboration insights

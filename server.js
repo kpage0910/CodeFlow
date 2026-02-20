@@ -72,7 +72,7 @@ let activeRuns = 0;
 function getOrCreateRoom(roomId) {
   if (!rooms[roomId]) {
     rooms[roomId] = {
-      code: 'print("Hello from CodeFlow")',
+      code: 'print("Hello from CodeFlow")\n',
       running: false,
       lastRunResult: null
     };
